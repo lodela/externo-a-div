@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Carga HTML en un div</title>
+<style media="screen">
+  @import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
+  *{font-family: 'Montserrat', sans-serif;}
+  header h4{
+    font-size:16px;
+    border:solid 1px grey;
+    border-width:0 0 1px 0;
+  }
+  .nav li a{
+    cursor:pointer;
+  }
+</style>
+</head>
+<body>
+  <header class="col-sm-3 sidenav">
+    <h4>Click to load external content</h4>
+    <ul class="nav nav-pills nav-stacked">
+      <li rel="pagina1.html"><a>Página 1</a></li>
+      <li rel="pagina2.html"><a>Página 2</a></li>
+      <li rel="pag3.html"><a>Page 3</a></li>
+      <li rel="google"><a>google</a></li>
+    </ul>
+  </header>
+  <section class="col-sm-9">
+    <main>
+      <div class="container">
+        <div id="content">contenido dinámico aquí..</div>
+      </div>
+    </main>
+  </section>
+  <footer></footer>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+  $(function(){
+    $('.nav li').on('click',function(){
+      $('.nav li').removeClass('active');
+      $(this).addClass('active');
+      var rel = $(this).attr('rel');
+      // $('#content').innerHTML='<object type="text/html" data="pagina1.html" ></object>';
+      $('#content').load(rel, function(responseTxt, statusTxt, xhr){
+        console.log(statusTxt);
+        if(statusTxt == "success")
+          alert("Lili... el contenido se cargó con éxito...!");
+        if(statusTxt == "error")
+          alert("Lili... tienes un Error: " + xhr.status + ": " + xhr.statusText);
+      });
+});
+  });
+</script>
+</html>
